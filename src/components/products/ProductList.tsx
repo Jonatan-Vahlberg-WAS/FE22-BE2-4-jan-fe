@@ -167,6 +167,7 @@ const ProductList = () => {
                     product={product}
                 />
             ))}
+            <hr className="border-gray-400"/>
         </div>
     );
 }

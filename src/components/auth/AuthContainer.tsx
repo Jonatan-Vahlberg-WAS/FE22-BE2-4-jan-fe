@@ -102,7 +102,11 @@ const AuthContainer = () => {
             {state === "logged-in" && user.user && (
                 <LoggedInSection
                     user={user.user}
-                    changeState={setState}
+                    changeState={() => {
+                        setState("login");
+                        setError("");
+                        user.logout();
+                    }}
                 />
             )}
             <hr className="border-gray-400 opacity-50 my-4" />
