@@ -26,7 +26,7 @@ const AuthContainer = () => {
     const user = useUser();
 
     const [state, setState] = useState<AuthState>("login");
-    const [formDetails, setFormDetails] = useState<AuthFormDetails>(defaultFormDetails) // type inference for formDetails);
+    const [formDetails, setFormDetails] = useState(defaultFormDetails) // type inference for formDetails);
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const AuthContainer = () => {
         }
         console.log("register");
         const form = e.currentTarget as HTMLFormElement; // type casting / type assertion
-        form.reset();
+        form?.reset();
     }
 
     return (
