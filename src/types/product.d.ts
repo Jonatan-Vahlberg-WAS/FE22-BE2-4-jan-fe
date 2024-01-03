@@ -13,3 +13,9 @@ interface Product {
     createdAt?: string;
     updatedAt?: string;
 }
+
+interface Book extends Product {
+    author: string;
+}
+
+type GlobalProduct = Product | Book;

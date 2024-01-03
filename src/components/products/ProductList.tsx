@@ -51,7 +51,7 @@ const categories = [{ //TODO: replace with actual categories from the database
         }
 ]
 
-const dummyData: Product[] = [ //TODO: replace with actual products from the database
+const dummyData: GlobalProduct[] = [ //TODO: replace with actual products from the database
     {
         "_id": "659566f8448d068dbaff0873",
         "name": "Facial Moisturizer",
@@ -136,10 +136,23 @@ const dummyData: Product[] = [ //TODO: replace with actual products from the dat
             }
         ]
     },
+    {
+        "_id": "659566f8448d068dbaff0885",
+        "name": "Bestseller Novel",
+        "description": "New York Times bestselling novel by a renowned author.",
+        "author": "John Doe",
+        "price": 18,
+        "categories": [
+            {
+                "_id": "65953cabad473a0bc7dab5e5",
+                "name": "Books"
+            }
+        ]
+    },
 ]
 
 const ProductList = () => {
-    const [products, setProducts] = useState<Product[]>(dummyData); //TODO: Replace with API call
+    const [products, setProducts] = useState<GlobalProduct[]>(dummyData); //TODO: Replace with API call
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
     useEffect(() => {
