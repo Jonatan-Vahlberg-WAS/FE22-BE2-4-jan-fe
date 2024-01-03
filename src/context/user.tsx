@@ -67,7 +67,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             })
             .catch((err) => {
                 console.log(err, err.response);
-                const data: ErrorResponse = err.response.data;
+                const data: ErrorResponse = err?.response?.data;
                 onError && onError(data.message);
             });
     };

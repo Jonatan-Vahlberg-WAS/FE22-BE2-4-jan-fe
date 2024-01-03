@@ -46,7 +46,7 @@ const AuthContainer = () => {
         }
         user.login(formDetails.email, formDetails.password, () => {
             const form = e.currentTarget as HTMLFormElement; // type casting / type assertion
-            form.reset();
+            form?.reset();
         }, (error) => {
             setError(error); 
         });
