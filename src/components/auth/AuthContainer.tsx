@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogingForm from "./LoginForm";
 import RegisterForm from "./RegisterFrom";
 import LoggedInSection from "./LoggedInSection";
+import { useUser } from "@/context/user";
 
 interface AuthFormDetails {
     email: string;
@@ -15,12 +16,21 @@ interface AuthFormDetails {
 type AuthFieldKey = keyof AuthFormDetails;
 
 const AuthContainer = () => {
+
+    const user = useUser();
+
     const [state, setState] = useState<AuthState>("login");
     const [formDetails, setFormDetails] = useState<AuthFormDetails>({ // type inference
         email: "",
         password: "",
     });
     const [error, setError] = useState<string>("");
+
+    useEffect(() => {
+        if(user.user) {
+            setState("logged-in");
+        }
+    }, [user.user]);
 
     const validateNotEmpty = (names: AuthFieldKey[]) => {
         setError("");
@@ -34,9 +44,14 @@ const AuthContainer = () => {
         if(!validateNotEmpty(["email", "password"])) {
             return setError("Please fill in all the fields");
         }
+        user.login(formDetails.email, formDetails.password, () => {
+            const form = e.currentTarget as HTMLFormElement; // type casting / type assertion
+            form.reset();
+        }, (error) => {
+            setError(error); 
+        });
+
         console.log("login");
-        const form = e.currentTarget as HTMLFormElement; // type casting / type assertion
-        form.reset();
     }
 
     const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
@@ -84,20 +99,13 @@ const AuthContainer = () => {
                     {error}
                 </i>
             </p>}
-            {state === "logged-in" && (
+            {state === "logged-in" && user.user && (
                 <LoggedInSection
-                    user={{
-                        firstName: "John",
-                        lastName: "Doe",
-                        email: "john@doe.com",
-                        _id: "123",
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString(),
-                    }}
+                    user={user.user}
                     changeState={setState}
                 />
             )}
-            <hr className="border-gray-400 opacity-50" />
+            <hr className="border-gray-400 opacity-50 my-4" />
         </div>
 
     );
