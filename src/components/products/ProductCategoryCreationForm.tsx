@@ -14,7 +14,7 @@ const ProductCategoryCreationForm = () => {
         e.preventDefault();
         console.log("submit");
     }
-    console.log(user);
+    
     if(!user.user) return null;
     return (
         <div className="flex flex-col gap-4 border border-gray-300 rounded-md p-4 mt-4">

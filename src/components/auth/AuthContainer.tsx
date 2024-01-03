@@ -6,24 +6,27 @@ import RegisterForm from "./RegisterFrom";
 import LoggedInSection from "./LoggedInSection";
 import { useUser } from "@/context/user";
 
+// Defines the formdetails type
 interface AuthFormDetails {
     email: string;
     password: string;
     firstName?: string;
     lastName?: string;
 }
-
+// Defines a type for each AuthFormDetails key such as "email" or "password"
 type AuthFieldKey = keyof AuthFormDetails;
+
+const defaultFormDetails: AuthFormDetails = {
+    email: "",
+    password: "",
+};
 
 const AuthContainer = () => {
 
     const user = useUser();
 
     const [state, setState] = useState<AuthState>("login");
-    const [formDetails, setFormDetails] = useState<AuthFormDetails>({ // type inference
-        email: "",
-        password: "",
-    });
+    const [formDetails, setFormDetails] = useState<AuthFormDetails>(defaultFormDetails) // type inference for formDetails);
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
@@ -32,6 +35,7 @@ const AuthContainer = () => {
         }
     }, [user.user]);
 
+    // Validates that the formDetails object has a value for each key in the names array
     const validateNotEmpty = (names: AuthFieldKey[]) => {
         setError("");
         return names.every((name: AuthFieldKey) => {
@@ -39,6 +43,7 @@ const AuthContainer = () => {
         })
     }
 
+    // Type casts the event target to an HTMLFormElement for the reset() method
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(!validateNotEmpty(["email", "password"])) {
@@ -54,6 +59,7 @@ const AuthContainer = () => {
         console.log("login");
     }
 
+    // Type casts the event target to an HTMLFormElement for the reset() method
     const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(!validateNotEmpty(["email", "password"])) {

@@ -1,5 +1,6 @@
 
 
+// Extends the HTML input element in order to have access to other props such as 'onBlur' or 'className'
 export interface BasicInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string;
     label: string;

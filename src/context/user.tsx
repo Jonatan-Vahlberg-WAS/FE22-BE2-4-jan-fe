@@ -3,7 +3,7 @@
 import AxiosInstance from "@/utils/axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
-
+// Defines the user Context state type
 interface UserContextType {
     user: User | null;
     token?: string;
@@ -43,6 +43,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     const fetchUser = () => {
         console.log("fetching user", AxiosInstance.defaults.headers.common);
+        // sets the data type for the response to known type AuthResponse
         AxiosInstance.get<AuthResponse>("/user/profile")
             .then((res) => {
                 setUser(res.data.user);
@@ -53,6 +54,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const login: UserContextType["login"] = async (email, password, onSuccess, onError) => {
+        // sets the data type for the response to known type AuthResponse
         AxiosInstance.post<AuthResponse>("/auth/login", {
             email,
             password,
@@ -67,7 +69,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             })
             .catch((err) => {
                 console.log(err, err.response);
-                const data: ErrorResponse = err?.response?.data;
+                const data: ErrorResponse = err?.response?.data; // type casting / type assertion
                 onError && onError(data.message);
             });
     };
