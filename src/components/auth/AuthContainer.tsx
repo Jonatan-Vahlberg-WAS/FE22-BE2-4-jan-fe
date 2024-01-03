@@ -3,6 +3,7 @@
 import { useState } from "react";
 import LogingForm from "./LoginForm";
 import RegisterForm from "./RegisterFrom";
+import LoggedInSection from "./LoggedInSection";
 
 interface AuthFormDetails {
     email: string;
@@ -60,6 +61,20 @@ const AuthContainer = () => {
                     {...formDetails}
                     firstName={formDetails.firstName || ""}
                     lastName={formDetails.lastName || ""}
+                />
+            )}
+
+            {state === "logged-in" && (
+                <LoggedInSection
+                    user={{
+                        firstName: "John",
+                        lastName: "Doe",
+                        email: "john@doe.com",
+                        _id: "123",
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                    }}
+                    changeState={setState}
                 />
             )}
             <hr className="border-gray-400 opacity-50" />
