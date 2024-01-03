@@ -4,7 +4,7 @@ import { useUser } from "@/context/user";
 import BasicInput from "../BasicInput";
 import { useState } from "react";
 
-const categories: Category[] = [{
+const categories: Category[] = [{ //TODO: replace with actual categories from the database
     "_id": "65953cabad473a0bc7dab5e5",
     "name": "Books"
 },

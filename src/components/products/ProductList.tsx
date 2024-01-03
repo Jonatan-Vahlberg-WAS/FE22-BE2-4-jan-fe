@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ProductListItem from "./ProductListItem";
 import ProductListHeader from "./ProductListHeader";
 
-const categories = [{
+const categories = [{ //TODO: replace with actual categories from the database
             "_id": "65953cabad473a0bc7dab5e5",
             "name": "Books"
         },
@@ -51,7 +51,7 @@ const categories = [{
         }
 ]
 
-const dummyData: Product[] = [
+const dummyData: Product[] = [ //TODO: replace with actual products from the database
     {
         "_id": "659566f8448d068dbaff0873",
         "name": "Facial Moisturizer",
