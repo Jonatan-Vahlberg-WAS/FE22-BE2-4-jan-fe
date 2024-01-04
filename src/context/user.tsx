@@ -53,6 +53,14 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             });
     };
 
+    const _setUser = (authResponse: AuthResponse) => {
+        const { user, token } = authResponse
+        setUser(user);
+        setToken(token);
+        localStorage.setItem("@AUTH_TOKEN", token);
+        AxiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+
     const login: UserContextType["login"] = async (email, password, onSuccess, onError) => {
         // sets the data type for the response to known type AuthResponse
         AxiosInstance.post<AuthResponse>("/auth/login", {
@@ -60,22 +68,30 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             password,
         })
             .then((res) => {
-                const { user, token } = res.data;
-                setUser(user);
-                setToken(token);
-                localStorage.setItem("@AUTH_TOKEN", token);
-                AxiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                _setUser(res.data)
                 onSuccess && onSuccess();
             })
             .catch((err) => {
-                console.log(err, err.response);
                 const data: ErrorResponse = err?.response?.data; // type casting / type assertion
                 onError && onError(data.message);
             });
     };
 
     const register: UserContextType["register"] = async (email, password, firstName, lastName, onSuccess, onError) => {
-        //TODO: implement register
+        AxiosInstance.post<AuthResponse>("/auth/register", {
+            email,
+            password,
+            firstName,
+            lastName
+        })
+        .then(res => {
+            _setUser(res.data)
+            onSuccess && onSuccess()
+        })
+        .catch((err) => {
+            const data: ErrorResponse = err?.response?.data; // type casting / type assertion
+            onError && onError(data.message);
+        })  
     };
 
     const logout: UserContextType["logout"] = () => {

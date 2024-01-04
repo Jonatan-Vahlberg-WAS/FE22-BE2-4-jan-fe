@@ -1,5 +1,8 @@
 
 
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 
 // Type definition
 type TPageProps = {
@@ -32,6 +35,26 @@ const dog: TDog = {
 
 
 export default function TypesExample() {
+    const [count, setCount] = useState(0)
+    const btnRef = useRef<HTMLButtonElement>(null)
+
+    useEffect(() => {
+        if(btnRef.current){
+            console.log(btnRef.current)
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+            btnRef?.current?.click()
+
+        }
+    },[btnRef.current])
+    
     const mockedRequest = (): any => {
         return {
             status: 200,
@@ -46,8 +69,8 @@ export default function TypesExample() {
     // Type assertion as (unsafe)
     let mockedResponse2Data = (mockedRequest() as MockResponse).data
 
-    // Type guard
-    let isArray = (unkw: StringOrArray) => {
+    // Type guard 
+    const isArray = (unkw: StringOrArray) => {
         if(Array.isArray(unkw)){
             unkw.push()
         }
@@ -58,6 +81,39 @@ export default function TypesExample() {
         unkw.toString()
     }
 
+    // Primitive type guarding
+    const determineType = (input: any): string => {
+        if(typeof input === "number") {
+            return "Is a number"
+        }
+        else if(typeof input === "string"){
+            return "Is a string"
+        }
+        else if(typeof input === "object"){
+            return "Is a object"
+        }
+
+        return "Unkown type"
+    }
+    
+    const getNumericValue = (id: string | number) => {
+        return typeof id === "string" ? Number(id) : id
+    }
+    console.log(
+
+        determineType(0),
+        determineType(""),
+        determineType({
+            hello: "world"
+        }),
+        determineType([])
+        )
+
+        console.log(getNumericValue(0))
+        console.log(getNumericValue("4004"))
+
+
+
   return (
     <main className="flex min-h-[calc(100vh-65px)] flex-col p-4">
         Types
@@ -65,6 +121,21 @@ export default function TypesExample() {
             title=""
             isAdmin
         />
+        <p>
+            {count}
+        </p>
+        <button
+            ref={btnRef}
+            onClick={() => {
+                console.log(count)
+                setCount(state => {
+                    console.log(state)
+                    return state+1
+                })
+            }}
+        >
+            increase
+        </button>
     </main>
   )
 }

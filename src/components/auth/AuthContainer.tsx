@@ -62,12 +62,16 @@ const AuthContainer = () => {
     // Type casts the event target to an HTMLFormElement for the reset() method
     const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!validateNotEmpty(["email", "password"])) {
+        if(!validateNotEmpty(["email", "password", "firstName", "lastName"])) {
             return setError("Please fill in all the fields");
         }
-        console.log("register");
-        const form = e.currentTarget as HTMLFormElement; // type casting / type assertion
-        form?.reset();
+
+        user.register(formDetails.email, formDetails.password, formDetails.firstName!, formDetails.lastName!, () => {
+            const form = e.currentTarget as HTMLFormElement; // type casting / type assertion
+            form?.reset();
+        }, (error) => {
+            setError(error); 
+        });
     }
 
     return (
