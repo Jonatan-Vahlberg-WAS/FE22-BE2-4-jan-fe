@@ -19,3 +19,15 @@ interface Book extends Product {
 }
 
 type GlobalProduct = Product | Book;
+
+interface ProductsResponse {
+    products: GlobalProduct[];
+}
+
+interface ProductResponse {
+    product: GlobalProduct;
+}
+
+interface CategoryResponse {
+    categories: Category[];
+}
